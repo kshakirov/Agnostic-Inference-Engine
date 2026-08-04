@@ -1,0 +1,74 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{geometry}
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\begin{document}
+
+\title{\textbf{TECHNICAL TASK: Step 0002. Non-linear Student-t bounds and Bayesian Agresti-Coull stabilization}}
+\author{Agnostic-Inference-Engine Development Backlog}
+\date{\today}
+\maketitle
+
+\section{Problem Statement and Synthetic Dataset}
+In the file \texttt{test\_inference\_wasserman.py}, create an extreme edge-case scenario representing an ideal proxy server where no errors occur.
+\begin{itemize}
+    \item Sample size: $n = 10$.
+    \item Number of failures: $X = 0$.
+    \item Structural format: All 10 tuple elements must be generated as \texttt{(False, 12.07)}.
+\end{itemize}
+
+A naive asymptotic Wald interval under these conditions completely collapses because the empirical variance drops to zero ($\hat{p} = 0 \implies \hat{p}(1-\hat{p}) = 0$). The target software system will incorrectly state that the probability of future failure is strictly zero ($C_n = [0.0; \, 0.0]$). The objective is to design a resilient, state-free mathematical core that preserves rational uncertainty under extreme data scarcity.
+
+\section{Part 1. Bayesian Agresti-Coull Prior Shifting}
+To protect the mathematical engine from zero-variance blindness, implement the Agresti-Coull stabilization trick within the moment-calculation module. This method shifts the coordinate system by adding 4 virtual trials (2 failures and 2 successes) to the real empirical sample:
+
+\begin{enumerate}
+    \item Define the shifted total sample size ($\tilde{n}$):
+    \begin{equation}
+    \tilde{n} = n + 4
+    \end{equation}
+    \item Define the shifted total failure count ($\tilde{X}$):
+    \begin{equation}
+    \tilde{X} = X + 2
+    \end{equation}
+    \item Calculate the adjusted success ratio ($\tilde{p}$) and compute the unbiased Bernoulli variance scaled by the degrees of freedom of the shifted sample size:
+    \begin{equation}
+    \tilde{p} = \frac{\tilde{X}}{\tilde{n}}
+    \end{equation}
+    \begin{equation}
+    \text{Variance}_{\text{corrected}} = \tilde{p} \cdot (1.0 - \tilde{p}) \cdot \frac{\tilde{n}}{\tilde{n} - 1}
+    \end{equation}
+\end{enumerate}
+
+\section{Part 2. Non-linear Hill-Davis Bounds Estimation}
+Replace the constant Gaussian threshold ($1.96$) with a dynamic coefficient that accounts for heavy tails via an asymptotic expansion over the real degrees of freedom:
+
+\begin{enumerate}
+    \item Calculate the degrees of freedom of the real unshifted sample:
+    \begin{equation}
+    df = n - 1
+    \end{equation}
+    \item Compute the adaptive bounding threshold ($Z$) using the non-linear penalization scale for a $95\%$ confidence level:
+    \begin{equation}
+    Z = 1.96 + \frac{2.38}{df} + \frac{2.71}{df^2}
+    \end{equation}
+    \item Evaluate the final standard error ($SE$) using the shifted sample size $\tilde{n}$ and determine the confidence corridor radius:
+    \begin{equation}
+    SE = \sqrt{\frac{\text{Variance}_{\text{corrected}}}{\tilde{n}}}
+    \end{equation}
+    \begin{equation}
+    \text{Radius} = Z \cdot SE
+    \end{equation}
+    \item The module must return the finalized interval bounds as a primitive tuple:
+    \begin{equation}
+    \text{Result} = (\tilde{p} - \text{Radius}, \, \tilde{p} + \text{Radius})
+    \end{equation}
+\end{enumerate}
+
+\section{Target Validation Vector}
+Upon successful implementation, the execution log of the verification script on the $n=10, X=0$ dataset must output a realistic risk corridor spanning approximately from $2\%$ to $34\%$ ($C_n \approx [0.02; \, 0.34]$) instead of a broken zero point. This mathematically incorporates the rigorous Student-t penalty for critical data scarcity.
+
+\end{document}
