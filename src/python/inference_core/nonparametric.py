@@ -1,4 +1,5 @@
 import numpy as np
+from math import ceil
 print("issue-2 estimating non-parametrically")
 
 #in milliseconds
@@ -17,7 +18,9 @@ def calculate_empirically_cdf(sample, t, total):
     return len([s for s in sample if s[1] < t]) / total
 
 def calculate_plug_in_quantile(sample, q_value):
+    
     print("calculate_plug_in_quantile: calculating ")
+    return sample[ceil(q_value * len(sample))]
 
 
 good_sample = generate_sample(0.0, 1.0, num, False)
@@ -28,7 +31,8 @@ bad_1_sample = generate_sample(0.0, 10.0, bad_num_1, True)
 bad_2_sample = generate_sample(0.0, 3.0, bad_num_2, True)
 #print(bad_2_sample[:5])
 
-distr =calculate_empirically_cdf(good_sample, 50.0, num)
+distr =calculate_empirically_cdf(good_sample, 500.0, num)
 print(distr)
 
-quantile = calculate_plug_in_quantile(sample, 0.99)
+quantile = calculate_plug_in_quantile(good_sample, 0.99)
+print(quantile)
