@@ -12,9 +12,9 @@ def generate_sample(mu, sigma, num, status):
     return  [(status, s* 100) for s in sorted(samples)]
 
     
-def calculate_empirically_cdf(sample, t):
+def calculate_empirically_cdf(sample, t, total):
     print(f"calculate_empirically_cdf: caculating cdf from [{len(sample)}] sample with threshold {t}")
-    return len([s for s in sample if s[1] < t])
+    return len([s for s in sample if s[1] < t]) / total
 
 def calculate_plug_in_quantile(sample, q_value):
     print("calculate_plug_in_quantile: calculating ")
@@ -28,7 +28,7 @@ bad_1_sample = generate_sample(0.0, 10.0, bad_num_1, True)
 bad_2_sample = generate_sample(0.0, 3.0, bad_num_2, True)
 #print(bad_2_sample[:5])
 
-distr =calculate_empirically_cdf(good_sample, 50)
+distr =calculate_empirically_cdf(good_sample, 50.0, num)
 print(distr)
 
 quantile = calculate_plug_in_quantile(sample, 0.99)
