@@ -9,7 +9,7 @@ bad_num_2 = int(num * 0.0023)
 def generate_sample(mu, sigma, num, status):
     print(f"generate_sample: generating {num} samples with status [{status}]")
     samples = np.random.lognormal(mean=mu, sigma=sigma, size=num)
-    return  [(status, s) for s in sorted(samples)]
+    return  [(status, s* 100) for s in sorted(samples)]
 
     
 def calculate_empirically_cdf(sample, t):
@@ -20,15 +20,15 @@ def calculate_plug_in_quantile(sample, q_value):
     print("calculate_plug_in_quantile: calculating ")
 
 
-good_sample = generate_sample(150, 45, num, False)
+good_sample = generate_sample(0.0, 1.0, num, False)
 print(good_sample[:5])
 
-bad_1_sample = generate_sample(3, 2, bad_num_1, True)
-print(bad_1_sample)
-bad_2_sample = generate_sample(350, 39, bad_num_2, True)
-print(bad_2_sample[:5])
+bad_1_sample = generate_sample(0.0, 10.0, bad_num_1, True)
+#print(bad_1_sample)
+bad_2_sample = generate_sample(0.0, 3.0, bad_num_2, True)
+#print(bad_2_sample[:5])
 
-distr =calculate_empirically_cdf(good_sample, 130)
+distr =calculate_empirically_cdf(good_sample, 50)
 print(distr)
 
 quantile = calculate_plug_in_quantile(sample, 0.99)
