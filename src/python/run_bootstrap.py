@@ -15,7 +15,7 @@ def curried_calculate_empirically_cdf(samples):
 def curried_calculate_plug_in_quantile(samples):
     return  calculate_plug_in_quantile(samples, 0.99)
 
-b_samples = bootstrap_naive(1000,  good_metrics[0:10000], curried_calculate_plug_in_quantile)
+b_samples = bootstrap_naive(1000,  good_metrics, curried_calculate_plug_in_quantile)
 
 
 quantile = calculate_plug_in_quantile(b_samples, 0.99)
