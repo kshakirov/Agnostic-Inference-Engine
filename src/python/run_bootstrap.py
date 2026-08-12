@@ -7,10 +7,10 @@ good_metrics = [m for m in metrics if not m[0] ]# у нас метрика на�
 good_metrics[89:100]
 
 print(f"moment quantile is {calculate_plug_in_quantile(good_metrics, 0.99)}")
-print(f"moment cdf for t = 163 is {calculate_empirically_cdf(good_metrics, 163, len(good_metrics))}")
+print(f"moment cdf for t = 163 is {calculate_empirically_cdf(good_metrics, 163)}")
 
 def carried_calculate_empirically_cdf(samples):
-    return calculate_empirically_cdf(samples, 9.0, len(samples))
+    return calculate_empirically_cdf(samples, 9.0)
 
 def carried_calculate_plug_in_quantile(samples):
     return  calculate_plug_in_quantile(samples, 0.99)
