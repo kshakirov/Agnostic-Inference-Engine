@@ -2,7 +2,7 @@ import numpy as np
 from math import ceil,floor
 
     
-def calculate_empirically_cdf(sample, t, total):
+def calculate_empirically_cdf(sample, t):
     print(f"calculate_empirically_cdf: caculating cdf from [{len(sample)}] sample with threshold {t}")
     return len([s for s in sample if s[1] <= t]) / len(sample)
 
