@@ -1,0 +1,6 @@
+# Local private research context. Never commit these source documents.
+.local-context/
+
+# Python runtime artifacts.
+__pycache__/
+*.py[cod]
