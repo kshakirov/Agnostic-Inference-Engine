@@ -10,4 +10,12 @@ def calculate_plug_in_quantile(sample, q_value):
     index =     min(ceil(q_value * len(sample)),len(sample)-1)
     return sorted(sample)[index]
 
+def calculate_plug_in_conf_interval(sample, confidentiality):
+    """  рассчет дов интервала для бутстрапа"""
+    v = (1 - confidentiality)/2
+    l_end =     min(ceil(v * len(sample)),len(sample)-1)
+    r_end =     min(ceil((1 -v ) * len(sample)),len(sample)-1)
+    sorted_sample = sorted(sample)
+    return sorted_sample[l_end], sorted_sample[r_end]
+
 
