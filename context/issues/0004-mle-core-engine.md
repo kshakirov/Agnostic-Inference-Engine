@@ -2,7 +2,7 @@
 
 - **State:** Open
 - **Created:** 2026-08-17
-- **Updated:** 2026-08-17
+- **Updated:** 2026-08-24
 - **Assignee:** `kshakirov`
 - **Source:** https://github.com/kshakirov/Agnostic-Inference-Engine/issues/4
 
@@ -106,3 +106,26 @@ $$
 - [ ] Обратная информация Фишера согласуется с Monte Carlo оценкой дисперсии.
 - [ ] Bootstrap-оценка ошибки сопоставлена с параметрическим эталоном.
 - [ ] Сохранены воспроизводимые JSON/CSV fixtures и параметры эксперимента.
+
+## Comment: Checkpoint — Repeated Samples and Sampling Distributions
+
+Источник: https://github.com/kshakirov/Agnostic-Inference-Engine/issues/4#issuecomment-5391228269
+
+Реализован первый проверочный эксперимент для нормальной модели:
+
+- истинные параметры: $\mu=1000$, $\sigma=150$;
+- 10 независимых выборок по 10 000 наблюдений;
+- отдельные воспроизводимые seed от 0 до 9;
+- для каждой выборки вычисляются $\hat\mu$ и $\hat\sigma$ (`np.std`, `ddof=0`);
+- оценки рассматриваются как два новых набора данных.
+
+Воспроизводимый результат:
+
+- $\operatorname{mean}(\hat\mu)=1000.491653$;
+- $\operatorname{std}(\hat\mu)=1.664215$;
+- $\operatorname{mean}(\hat\sigma)=150.009724$;
+- $\operatorname{std}(\hat\sigma)=0.834705$.
+
+Механика повторного эксперимента работает, но 10 повторений являются только smoke-check. Следующая точка: увеличить $B$ и сравнить наблюдаемый разброс оценок с теоретическими стандартными ошибками через информацию Фишера.
+
+Код: commit `5629cd6`.
