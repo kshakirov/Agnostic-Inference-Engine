@@ -1,5 +1,5 @@
 from  inference_core.bootstrap import get_metrics, bootstrap_naive
-from inference_core.nonparametric import calculate_empirically_cdf, calculate_plug_in_quantile
+from inference_core.nonparametric import calculate_empirically_cdf, calculate_plug_in_quantile, calculate_plug_in_conf_interval
 from pathlib import Path
 
 metrics = get_metrics("samples.dat")
@@ -15,8 +15,11 @@ def curried_calculate_empirically_cdf(samples):
 def curried_calculate_plug_in_quantile(samples):
     return  calculate_plug_in_quantile(samples, 0.99)
 
-b_samples = bootstrap_naive(1000,  good_metrics, curried_calculate_plug_in_quantile)
+b_samples = bootstrap_naive(10,  good_metrics, curried_calculate_plug_in_quantile)
 
 
-quantile = calculate_plug_in_quantile(b_samples, 0.99)
+quantile = calculate_plug_in_quantile(b_samples, 0.5)
 print(f"Monte Carlo quantile is {quantile}")
+
+l_end, r_end = calculate_plug_in_conf_interval(b_samples, 0.95)
+print(l_end,r_end)
