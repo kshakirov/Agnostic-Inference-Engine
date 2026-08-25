@@ -4,3 +4,4 @@
 
 - [Генерация тестовых данных](generate-test-data.md)
 - [Theory Lab — журнал понимания](Theory-Lab.md)
+- [Research Tracks — куда копать](Research-Tracks.md)
