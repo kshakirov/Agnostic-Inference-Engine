@@ -1,9 +1,11 @@
 # GitHub Wiki
 
-Локальный снимок Wiki на **2026-08-24**.
+Локальный снимок Wiki на **2026-08-25**.
 
 - [Home](Home.md)
 - [First approach: генерация синтетического трафика](first-approach.md)
 - [Generate test data](generate-test-data.md)
+- [Theory Lab — журнал понимания](Theory-Lab.md)
+- [STAT-MLE-001 — Пощупал Фишера руками](STAT-MLE-001.md)
 
 Каноническая Wiki: https://github.com/kshakirov/Agnostic-Inference-Engine/wiki
