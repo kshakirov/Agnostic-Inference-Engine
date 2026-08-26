@@ -11,7 +11,7 @@
 $$
 \hat\theta=\text{оценка},
 \qquad
-\operatorname{SE}(\hat\theta)=\text{её погрешность}.
+\mathrm{SE}(\hat\theta)=\text{её погрешность}.
 $$
 
 ## Вся машина
@@ -77,7 +77,7 @@ $$
 Приближённая ковариация MLE:
 
 $$
-\operatorname{Cov}(\hat\theta)
+\mathrm{Cov}(\hat\theta)
 \approx
 I_n(\theta)^{-1}.
 $$
@@ -109,7 +109,7 @@ $$
 Для одного параметра:
 
 $$
-\operatorname{SE}(\hat\theta)
+\mathrm{SE}(\hat\theta)
 \approx
 \frac1{\sqrt{I_n(\theta)}}.
 $$
@@ -151,7 +151,7 @@ Monte Carlo
 Для среднего уже проверено:
 
 $$
-\operatorname{std}(\hat\mu)
+\mathrm{std}(\hat\mu)
 \approx
 \frac{\sigma}{\sqrt n}
 =
@@ -163,11 +163,11 @@ $$
 Для оценки дисперсии Monte Carlo дал:
 
 $$
-\operatorname{mean}(\hat\sigma^2)\approx22490.906,
+\mathrm{mean}(\hat\sigma^2)\approx22490.906,
 $$
 
 $$
-\operatorname{std}(\hat\sigma^2)\approx321.530
+\mathrm{std}(\hat\sigma^2)\approx321.530
 $$
 
 при настоящей $\sigma^2=22500$ и $n=10000$.
