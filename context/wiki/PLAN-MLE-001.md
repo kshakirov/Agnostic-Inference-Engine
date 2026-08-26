@@ -150,13 +150,7 @@ Monte Carlo
 
 Для среднего уже проверено:
 
-$$
-\mathrm{std}(\hat\mu)
-\approx
-\frac{\sigma}{\sqrt n}
-=
-\frac1{\sqrt{I_n(\mu)}}.
-$$
+$$\mathrm{std}(\hat\mu) \approx \frac{\sigma}{\sqrt{n}} = \frac{1}{\sqrt{I_n(\mu)}}$$
 
 Проверено и масштабирование: $n\times4$ уменьшает разброс примерно вдвое, $\sigma\times2$ увеличивает его вдвое.
 
