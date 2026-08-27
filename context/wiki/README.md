@@ -10,5 +10,6 @@
 - [PLAN-MLE-001 — Вся машина главы 9](PLAN-MLE-001.md)
 - [Research Tracks — куда копать](Research-Tracks.md)
 - [SETUP-001 — Джейнс и статистика в PostgreSQL](SETUP-001.md)
+- [PROCESS-001 — Учёба как игра в различение](PROCESS-001.md)
 
 Каноническая Wiki: https://github.com/kshakirov/Agnostic-Inference-Engine/wiki
