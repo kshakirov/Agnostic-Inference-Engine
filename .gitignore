@@ -4,3 +4,8 @@
 # Python runtime artifacts.
 __pycache__/
 *.py[cod]
+
+# macOS and Emacs local artifacts.
+.DS_Store
+*~
+\#*\#
