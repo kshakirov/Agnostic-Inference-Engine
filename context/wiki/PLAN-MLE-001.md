@@ -8,11 +8,7 @@
 
 Повторить реальный мир тысячу раз обычно нельзя. На выходе хочется иметь не голое число, а пару:
 
-$$
-\hat\theta=\text{оценка},
-\qquad
-\mathrm{SE}(\hat\theta)=\text{её погрешность}.
-$$
+$$ \hat\theta=\text{оценка}, \qquad \mathrm{SE}(\hat\theta)=\text{её погрешность}. $$
 
 ## Вся машина
 
@@ -20,41 +16,27 @@ $$
 
 Сначала выбирается семейство:
 
-$$
-p(x\mid\theta).
-$$
+$$ p(x\mid\theta). $$
 
 Для текущего эксперимента:
 
-$$
-X\sim N(\mu,\sigma^2),
-\qquad
-\theta=(\mu,\sigma^2).
-$$
+$$ X\sim N(\mu,\sigma^2), \qquad \theta=(\mu,\sigma^2). $$
 
 Это предположение об устройстве объекта, а не истина, выпавшая из данных.
 
 ### 2. MLE даёт точку
 
-$$
-\hat\theta=\arg\max_\theta L(\theta;x).
-$$
+$$ \hat\theta=\arg\max_\theta L(\theta;x). $$
 
 Для Gaussian:
 
-$$
-\hat\mu=\overline X,
-\qquad
-\hat\sigma^2=\frac1n\sum_i(X_i-\overline X)^2.
-$$
+$$ \hat\mu=\overline X, \qquad \hat\sigma^2=\frac1n\sum_i(X_i-\overline X)^2. $$
 
 MLE говорит, какой параметр лучше всего согласуется с полученной выборкой. Но голой точки мало: следующая выборка даст другую точку.
 
 ### 3. Оценка тоже случайна
 
-$$
-\hat\theta=\hat\theta(X_1,\ldots,X_n).
-$$
+$$ \hat\theta=\hat\theta(X_1,\ldots,X_n). $$
 
 Поэтому у неё есть собственное выборочное распределение. Главный вопрос дальше: как сильно оценка гуляет вокруг настоящего параметра?
 
@@ -66,21 +48,13 @@ $$
 
 ### 5. Фишер даёт масштаб
 
-$$
-I_n(\theta)
-=
--\mathbb E_\theta\left[\nabla_\theta^2\ell(\theta;X)\right].
-$$
+$$ I_n(\theta)=-\mathbb E_\theta\left[\nabla_\theta^2\ell(\theta;X)\right]. $$
 
 Фишер смотрит на кривизну log-likelihood и говорит, насколько различимы соседние параметры. Острый пик — оценка гуляет мало. Плоский пик — гуляет сильно.
 
 Приближённая ковариация MLE:
 
-$$
-\mathrm{Cov}(\hat\theta)
-\approx
-I_n(\theta)^{-1}.
-$$
+$$ \mathrm{Cov}(\hat\theta)\approx I_n(\theta)^{-1}. $$
 
 Сам Фишер ещё не даёт форму распределения, только масштаб.
 
@@ -88,11 +62,7 @@ $$
 
 При большом $n$ и нормальных условиях работы всей машины:
 
-$$
-\hat\theta
-\approx
-N\left(\theta,I_n(\theta)^{-1}\right).
-$$
+$$ \hat\theta\approx N\left(\theta,I_n(\theta)^{-1}\right). $$
 
 Получается связка:
 
@@ -108,11 +78,7 @@ $$
 
 Для одного параметра:
 
-$$
-\mathrm{SE}(\hat\theta)
-\approx
-\frac1{\sqrt{I_n(\theta)}}.
-$$
+$$ \mathrm{SE}(\hat\theta)\approx\frac1{\sqrt{I_n(\theta)}}. $$
 
 Вот отсюда появляется возможность оценить погрешность по одной реальной выборке, не перезапуская реальный мир тысячу раз.
 
@@ -120,15 +86,11 @@ $$
 
 Если теория получена для
 
-$$
-\hat v=\hat\sigma^2,
-$$
+$$ \hat v=\hat\sigma^2, $$
 
 а физически понятнее
 
-$$
-\hat\sigma=\sqrt{\hat v},
-$$
+$$ \hat\sigma=\sqrt{\hat v}, $$
 
 дельта-метод переносит разброс через нелинейное преобразование. Дисперсия удобна алгебре, стандартное отклонение возвращает результат в миллисекунды.
 
@@ -156,13 +118,9 @@ $$\mathrm{std}(\hat\mu) \approx \frac{\sigma}{\sqrt{n}} = \frac{1}{\sqrt{I_n(\mu
 
 Для оценки дисперсии Monte Carlo дал:
 
-$$
-\mathrm{mean}(\hat\sigma^2)\approx22490.906,
-$$
+$$ \mathrm{mean}(\hat\sigma^2)\approx22490.906, $$
 
-$$
-\mathrm{std}(\hat\sigma^2)\approx321.530
-$$
+$$ \mathrm{std}(\hat\sigma^2)\approx321.530 $$
 
 при настоящей $\sigma^2=22500$ и $n=10000$.
 
