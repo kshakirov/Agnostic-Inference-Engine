@@ -1,6 +1,7 @@
 from  inference_core.wasserman import calculate_empirical_moments
 import numpy as np
 import array
+from math import erf,sqrt
 
 
 def empirical_cdf(sample):
@@ -11,7 +12,17 @@ def empirical_cdf(sample):
     y_i = np.divide(y_direct,y_len)
 #    y= np.multiply(x,y_i)
     return x,y_i
-    
+
+def normal_cdf_at_point(x, mu_hat, sigma_hat):
+    z = (x - mu_hat) /sigma_hat
+    return 0.5 * ( 1 + erf(z/sqrt(2)))
+
+def partial_cdf_at_point(mu_hat, sigma_hat):
+    def ncdf_at_point(x):
+        z = (x - mu_hat) /sigma_hat
+        return 0.5 * ( 1 + erf(z/sqrt(2)))
+    return ncdf_at_point
+
     
 
 file_name = "/Users/kiryloshakirov/Documents/ChatGPT/Agnostic-Inference-Engine/experiments/latency/2026-08-31-baseline-a/baseline-a.csv"
@@ -37,3 +48,15 @@ print(f"mean = {mean}\n var =  {var}\n std =  {std}")
 
 x, y = empirical_cdf(np_data)
 print(f"ecdf x 10  = {x[0:10]} y 10 = {y[0:10]}")
+
+ncdf_at_point = partial_cdf_at_point(mean, std)
+
+
+assert(normal_cdf_at_point(mean - std/2, mean, std) == ncdf_at_point(mean - std/2))
+
+vectorized_func = np.vectorize(ncdf_at_point)
+
+n_x = vectorized_func(x)
+
+d = np.max(np.abs(np.subtract(n_x, y)))
+d
