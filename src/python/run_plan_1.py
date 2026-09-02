@@ -3,7 +3,7 @@ import numpy as np
 import array
 
 
-def empiricall_cdf(sample):
+def empirical_cdf(sample):
     print(f"_empirically_cdf: caculating cdf from [{len(sample)}] ")
     x = np.sort(sample)
     y_direct = np.arange(1, len(x) +1 )
@@ -18,16 +18,15 @@ file_name = "/Users/kiryloshakirov/Documents/ChatGPT/Agnostic-Inference-Engine/e
 length = 600
 
 def prep_data(file_name, length):
-    fd = open(file_name)
     np_data = np.zeros(length,dtype=np.float64)
-    print(fd)
-    for i, line in enumerate(fd):
-        cells = line.split(',')
-        np_data[i] = float(cells[2])/1000000
+    with open(file_name) as fd:
+        print(fd)
+        for i, line in enumerate(fd):
+            cells = line.split(',')
+            np_data[i] = float(cells[2])/1000000
     return np_data
 
 np_data = prep_data(file_name, length)
-#print(np_data)
 mean = np.mean(np_data)
 
 var  = np.var(np_data)
@@ -36,5 +35,5 @@ std = np.std(np_data)
 print(f"mean = {mean}\n var =  {var}\n std =  {std}")
 
 
-x, y = empiricall_cdf(np_data)
+x, y = empirical_cdf(np_data)
 print(f"ecdf x 10  = {x[0:10]} y 10 = {y[0:10]}")
