@@ -6,36 +6,35 @@ import array
 def empiricall_cdf(sample):
     print(f"_empirically_cdf: caculating cdf from [{len(sample)}] ")
     x = np.sort(sample)
-    y_direct = np.arange(len(x))
-    y_rev = y_direct[::-1]
-    y_i = np.divide(y_direct,y_rev)
-    y= np.multiply(x,y_i)
-    return y 
+    y_direct = np.arange(1, len(x) +1 )
+    y_len = np.full(len(x),len(x))
+    y_i = np.divide(y_direct,y_len)
+#    y= np.multiply(x,y_i)
+    return x,y_i
     
     
 
-print("Followng the plan")
-fd = open("/Users/kiryloshakirov/Documents/ChatGPT/Agnostic-Inference-Engine/experiments/latency/2026-08-31-baseline-a/baseline-a.csv")
-print(fd)
+file_name = "/Users/kiryloshakirov/Documents/ChatGPT/Agnostic-Inference-Engine/experiments/latency/2026-08-31-baseline-a/baseline-a.csv"
+length = 600
 
+def prep_data(file_name, length):
+    fd = open(file_name)
+    np_data = np.zeros(length,dtype=np.float64)
+    print(fd)
+    for i, line in enumerate(fd):
+        cells = line.split(',')
+        np_data[i] = float(cells[2])/1000000
+    return np_data
 
-np_data = np.zeros(600,dtype=np.float64)
-
-
-for i, line in enumerate(fd):
-    cells = line.split(',')
-#    print(float(cells[]))
-    np_data[i] = float(cells[2])/1000000
-#    break
-#data[:10]
-
-np_data[0:10]
+np_data = prep_data(file_name, length)
+#print(np_data)
 mean = np.mean(np_data)
-# mean
+
 var  = np.var(np_data)
 std = np.std(np_data)
 
 print(f"mean = {mean}\n var =  {var}\n std =  {std}")
 
 
-empiricall_cdf(np_data)
+x, y = empiricall_cdf(np_data)
+print(f"ecdf x 10  = {x[0:10]} y 10 = {y[0:10]}")
