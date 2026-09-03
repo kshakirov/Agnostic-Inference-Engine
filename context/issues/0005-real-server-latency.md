@@ -195,7 +195,7 @@ D_after = 0.33018544917945775
 
 ## Comment: Normal не выдержала первую проверку
 
-Источник: будет добавлен после публикации в GitHub Issue #5.
+Источник: https://github.com/kshakirov/Agnostic-Inference-Engine/issues/5#issuecomment-5520544269
 
 Сегодня добил пункты 3 и 4 плана.
 
