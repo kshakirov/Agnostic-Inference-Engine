@@ -77,8 +77,9 @@ def bootstrap_normal(size, mu,sigma,length):
         d_s[i] = bootstrap_normal_step(mu, sigma, length)
     return d_s
 
-file_name = "/Users/kiryloshakirov/Documents/ChatGPT/Agnostic-Inference-Engine/experiments/latency/2026-08-31-baseline-a/baseline-a.csv"
-length = 600
+FILE_NAME = "/Users/kiryloshakirov/Documents/ChatGPT/Agnostic-Inference-Engine/experiments/latency/2026-08-31-baseline-a/baseline-a.csv"
+LENGTH = 600
+BOOTSTRAP_SIZE=1000
 
 def prep_data(file_name, length):
     np_data = np.zeros(length,dtype=np.float64)
@@ -89,7 +90,7 @@ def prep_data(file_name, length):
             np_data[i] = float(cells[2])/1000000
     return np_data
 
-np_data = prep_data(file_name, length)
+np_data = prep_data(FILE_NAME, LENGTH)
 mean = np.mean(np_data)
 
 var  = np.var(np_data)
@@ -110,10 +111,12 @@ vectorized_func = np.vectorize(ncdf_at_point)
 
 n_x = vectorized_func(x)
 
+d_after_array = np.abs(np.subtract(n_x, y))
 d_after = np.max(np.abs(np.subtract(n_x, y)))
 
-y_before = np.arange(length) *  1/length
+y_before = np.arange(LENGTH) *  1/LENGTH
 
+d_before_array = np.abs(np.subtract(n_x, y_before))
 d_before = np.max(np.abs(np.subtract(n_x, y_before)))
 
 print(f"D before {d_before} D after {d_after}")
@@ -122,16 +125,58 @@ d_real = max(d_before,d_after)
 print(f"D real is {d_real}")
 
 
-d_star_one = bootstrap_normal_step(mean, std, length)
+d_star_one = bootstrap_normal_step(mean, std, LENGTH)
 print(f" D star one  is {d_star_one}")
-d_star_s =bootstrap_normal(1000, mean, std, length)
+d_star_s =bootstrap_normal(BOOTSTRAP_SIZE, mean, std, LENGTH)
 d_star_max = np.max(d_star_s)
 
 print(f" D star max is {d_star_max}")
 
-plot_empirical_and_normal_pdf(
-    np_data,
-    mean,
-    std,
-    "/Users/kiryloshakirov/Documents/ChatGPT/Agnostic-Inference-Engine/experiments/latency/2026-08-31-baseline-a/baseline-a-histogram-vs-normal.png",
-)
+
+
+
+# plot_empirical_and_normal_pdf(
+#     np_data,
+#     mean,
+#     std,
+#     "/Users/kiryloshakirov/Documents/ChatGPT/Agnostic-Inference-Engine/experiments/latency/2026-08-31-baseline-a/baseline-a-histogram-vs-normal.png",
+# )
+
+
+#
+ro = (1 + len([d for d in d_star_s if d >= d_real])) / (BOOTSTRAP_SIZE + 1)
+print(f"ro is {ro}")
+
+print("Looking for index of D real max")
+
+print("which d_after or d_before won")
+
+ks_delta_i = None
+ks_empirical_latency = None
+ks_empirical_freq = None
+ks_model_freq = None
+if d_before >= d_after:
+    indices = np.where(d_before_array >= d_real )[0];
+    print(f"d_before array max indices {indices}")
+    if len(indices) > 0:
+        i = indices[0]
+        ks_empirical_latency =  x[i]
+        ks_empirical_freq =  y_before[i]
+        ks_model_freq = n_x[i]
+        ks_delta_i = ks_model_freq - ks_empirical_freq
+
+else:
+    indices = np.where(d_after_array >= d_real)[0];
+    print(f"d_after array max indices {indices}")
+    if len(indices) > 0:
+        i = indices[0]
+        ks_empirical_latency =  x[i]
+        ks_empirical_freq =  y[i]
+        ks_model_freq = n_x[i]
+        ks_delta_i = ks_model_freq - ks_empirical_freq
+        
+    
+
+print(f" KS non parametric criterion empirical latency {ks_empirical_latency}, empirical freq {ks_empirical_freq}, model freq {ks_model_freq}, delta is {ks_delta_i} ")
+
+
