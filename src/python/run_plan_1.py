@@ -180,3 +180,29 @@ else:
 print(f" KS non parametric criterion empirical latency {ks_empirical_latency}, empirical freq {ks_empirical_freq}, model freq {ks_model_freq}, delta is {ks_delta_i} ")
 
 
+def quantile(cdf_x,cdf_y,y_value):
+    if(y_value <= 1 and y_value >=0):
+        y_i = np.where(cdf_y >= y_value)[0][0]
+        return cdf_x[y_i]
+    else:
+        raise ValueError("quantile  value is incorrect must be 0 <= value <= 1")
+    
+    
+print(f" quantiles: mediana {quantile(x, y, 0.5)} vs mu {mean} ,0.90  {quantile(x, y, 0.9)}, 0.95  {quantile(x, y, 0.95)}, 0.99  {quantile(x, y, 0.99)}")
+
+#quantile(x, y, 2)
+
+def outliers(cdf_x,cdf_y):
+    y_i = np.where(cdf_y >= 0.99)[0][0]
+    return cdf_x[y_i:]
+
+
+def outliers_env(cdf_x,cdf_y, data):
+    ots = outliers(cdf_x, cdf_y)
+    for o in ots:
+        indx = np.where(data ==o)[0][0]
+        l_i = indx - 5
+        r_i = indx + 5
+        print(f"{o} index in data is {indx} env is {data[l_i:r_i]}")
+
+outliers_env(x, y, np_data)
