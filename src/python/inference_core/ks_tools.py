@@ -3,7 +3,7 @@ import numpy as np
 import array
 import matplotlib.pyplot as plt
 from math import erf,sqrt
-from scipy.stats import lognorm
+from scipy.stats import gamma
 
 def empirical_cdf(sample):
     """ caclulates empirical cdf"""
@@ -24,6 +24,12 @@ def partial_cdf_at_point(mu_hat, sigma_hat):
         return 0.5 * ( 1 + erf(z/sqrt(2)))
     return ncdf_at_point
 
+def partial_gammf_cdf_at_point(mu_hat, sigma_hat):
+    def gamma_cdf_at_point(x):
+        return gamma.cdf(x, a=mu_hat, scale=sigma_hat)
+    return gamma_cdf_at_point
+
+
 
 def bootstrap_normal_step(mu,sigma, length):
     "из названия понятно бутcтрап нормального распределиния один шаг"
@@ -43,10 +49,32 @@ def bootstrap_normal_step(mu,sigma, length):
 #    print(f"D real is {d_real}")
     return d_star
 
-def bootstrap_normal(size, mu,sigma,length):
+
+def bootstrap_gamma_step(mu,sigma, length):
+    "из названия понятно бутcтрап нормального распределиния один шаг"
+    rng = np.random.default_rng()
+#    np_array = rng.normal(loc=mu, scale=sigma, size=length)
+    np_array = rng.gamma(shape=mu, scale=sigma, size=length)
+    x_cdf,y_after_cdf= empirical_cdf(np_array)
+    m, loc, s = gamma.fit(np_array, floc=0)
+    #m = np.mean(np_array)
+    #s = np.std(np_array)
+    ncdf_at_point = partial_gammf_cdf_at_point(m, s)
+    vectorized_func = np.vectorize(ncdf_at_point)
+    n_x = vectorized_func(x_cdf)
+    d_after = np.max(np.abs(np.subtract(n_x, y_after_cdf)))
+    y_before = np.arange(length) *  1/length
+    d_before = np.max(np.abs(np.subtract(n_x, y_before)))
+    #print(f"D before {d_before} D after {d_after}")
+    d_star= max(d_before,d_after)
+#    print(f"D real is {d_real}")
+    return d_star
+
+
+def bootstrap_normal(size, mu,sigma,length,step=bootstrap_normal_step):
     d_s = np.full(size,0.0)
     for i in range(size):
-        d_s[i] = bootstrap_normal_step(mu, sigma, length)
+        d_s[i] = step(mu, sigma, length)
     return d_s
 
 
@@ -60,10 +88,10 @@ def get_dstar(n_x,y,length):
     d_before_array = np.abs(np.subtract(n_x, y_before))
     d_before = np.max(np.abs(np.subtract(n_x, y_before)))
 
-    print(f"D before {d_before} D after {d_after}")
+#    print(f"D before {d_before} D after {d_after}")
 
     d_real = max(d_before,d_after)
-    print(f"D real is {d_real}")
+  #  print(f"D real is {d_real}")
     return d_real
 
 def bootstrap_dstar(mean, std,length, bootstrap_size):

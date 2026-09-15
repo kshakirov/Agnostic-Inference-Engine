@@ -59,4 +59,6 @@ d_star_s_log = bootstrap_dstar(x_log_mean, x_log_std, LENGTH,BOOTSTRAP_SIZE )
 
 
 
-get_ro(d_star_s_log, d_star_real_log, BOOTSTRAP_SIZE)
+ro = get_ro(d_star_s_log, d_star_real_log, BOOTSTRAP_SIZE)
+
+print(f"lognorma ro is {ro}")
