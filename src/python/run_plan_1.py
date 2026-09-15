@@ -3,16 +3,9 @@ import numpy as np
 import array
 import matplotlib.pyplot as plt
 from math import erf,sqrt
+from scipy.stats import lognorm
+from inference_core.ks_tools import empirical_cdf
 
-
-def empirical_cdf(sample):
-    #print(f"_empirically_cdf: caculating cdf from [{len(sample)}] ")
-    x = np.sort(sample)
-    y_direct = np.arange(1, len(x) +1 )
-    y_len = np.full(len(x),len(x))
-    y_i = np.divide(y_direct,y_len)
-#    y= np.multiply(x,y_i)
-    return x,y_i
 
 def normal_cdf_at_point(x, mu_hat, sigma_hat):
     z = (x - mu_hat) /sigma_hat
@@ -206,3 +199,59 @@ def outliers_env(cdf_x,cdf_y, data):
         print(f"{o} index in data is {indx} env is {data[l_i:r_i]}")
 
 outliers_env(x, y, np_data)
+
+
+print("Lognormal started")
+
+
+x_log =np.log(x)
+
+x_log_mean = np.mean(x_log)
+
+x_log_var = np.var(x_log)
+
+x_log_std = np.std(x_log)
+
+print(f"x log, mean {x_log_mean}, var is {x_log_var} std is {x_log_std}")
+
+print(f"building log normal cdf for each elem in ECDF we get its probability based on our x_log_mean and x_log_std, for it we use vectorized functionality of numpy")
+
+
+lognorm_func = partial_cdf_at_point(x_log_mean, x_log_std)
+
+lognorm_func_vectorized = np.vectorize(lognorm_func)
+x_log_cdf =lognorm_func_vectorized(x_log)
+
+
+#later change for names n_x 
+def get_dstar(n_x,y):
+    d_after_array = np.abs(np.subtract(n_x, y))
+    d_after = np.max(np.abs(np.subtract(n_x, y)))
+
+    y_before = np.arange(LENGTH) *  1/LENGTH
+
+    d_before_array = np.abs(np.subtract(n_x, y_before))
+    d_before = np.max(np.abs(np.subtract(n_x, y_before)))
+
+    print(f"D before {d_before} D after {d_after}")
+
+    d_real = max(d_before,d_after)
+    print(f"D real is {d_real}")
+    return d_real
+
+def bootstrap_dstar(mean, std,length, bootstrap_size):
+    d_star_one = bootstrap_normal_step(mean, std, length)
+    print(f" D star one  is {d_star_one}")
+    d_star_s =bootstrap_normal(bootstrap_size, mean, std, length)
+    d_star_max = np.max(d_star_s)
+    print(f" D star max is {d_star_max}")
+    return d_star_s 
+
+d_star_real_log = get_dstar(x_log_cdf, y)
+
+d_star_s_log = bootstrap_dstar(x_log_mean, x_log_std, LENGTH,BOOTSTRAP_SIZE )
+
+def get_ro(d_star_s, d_real, bootstrap_size):
+    return (1 + len([d for d in d_star_s if d >= d_real])) / (bootstrap_size + 1)
+
+get_ro(d_star_s_log, d_star_real_log, BOOTSTRAP_SIZE)
