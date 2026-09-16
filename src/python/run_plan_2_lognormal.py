@@ -53,7 +53,7 @@ lognorm_func = partial_cdf_at_point(x_log_mean, x_log_std)
 lognorm_func_vectorized = np.vectorize(lognorm_func)
 x_log_cdf =lognorm_func_vectorized(x_log)
 
-d_star_real_log = get_dstar(x_log_cdf, y, LENGTH)
+d_star_real_log = get_dstar(x_log_cdf, y)
 
 d_star_s_log = bootstrap_dstar(x_log_mean, x_log_std, LENGTH,BOOTSTRAP_SIZE )
 
