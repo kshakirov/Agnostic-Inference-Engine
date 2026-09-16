@@ -58,7 +58,7 @@ b_d_star = bootstrap_gamma_step(shape, scale, LENGTH)
 
 print(f"b d_star is {b_d_star}")
 
-b_d_stars = bootstrap(BOOTSTRAP_SIZE, shape, scale, LENGTH,bootstrap_gamma_step)
+b_d_stars = bootstrap(BOOTSTRAP_SIZE, (shape, scale), LENGTH,bootstrap_gamma_step)
 
 print(b_d_stars[10:20])
 

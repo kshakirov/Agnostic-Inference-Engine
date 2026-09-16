@@ -55,7 +55,7 @@ x_log_cdf =lognorm_func_vectorized(x_log)
 
 d_star_real_log = get_dstar(x_log_cdf, y)
 
-d_star_s_log = bootstrap_dstar(x_log_mean, x_log_std, LENGTH,BOOTSTRAP_SIZE)
+d_star_s_log = bootstrap_dstar((x_log_mean, x_log_std), LENGTH,BOOTSTRAP_SIZE)
 
 
 
