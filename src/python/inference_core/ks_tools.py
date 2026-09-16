@@ -41,16 +41,9 @@ def get_dstar(n_x,y):
     return d_real
 
 
-# def bootstrap_dstar(params,length, bootstrap_size):
-#     d_star_one = bootstrap_normal_step(*params, length)
-#     d_star_s =bootstrap(bootstrap_size, params, length)
-#     d_star_max = np.max(d_star_s)
-#     return d_star_s 
-
-
-def bootstrap_normal_step(mu,sigma, length):
+def bootstrap_normal_step(mu,sigma, length,rng):
     "из названия понятно бутcтрап нормального распределиния один шаг"
-    rng = np.random.default_rng()
+
     np_array = rng.normal(loc=mu, scale=sigma, size=length)
     x_cdf,y_after_cdf= empirical_cdf(np_array)
     m = np.mean(np_array)
@@ -62,9 +55,9 @@ def bootstrap_normal_step(mu,sigma, length):
 
 
 
-def bootstrap_gamma_step(mu,sigma, length):
+def bootstrap_gamma_step(mu,sigma, length, rng):
     "из названия понятно бутcтрап нормального распределиния один шаг"
-    rng = np.random.default_rng()
+
     np_array = rng.gamma(shape=mu, scale=sigma, size=length)
     x_cdf,y_after_cdf= empirical_cdf(np_array)
     m, loc, s = gamma.fit(np_array, floc=0)
@@ -75,8 +68,9 @@ def bootstrap_gamma_step(mu,sigma, length):
 
 def bootstrap(size, params,length,step=bootstrap_normal_step):
     d_s = np.full(size,0.0)
+    rng = np.random.default_rng()
     for i in range(size):
-        d_s[i] = step(*params, length)
+        d_s[i] = step(*params, length, rng)
     return d_s
 
 
