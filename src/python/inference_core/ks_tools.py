@@ -31,7 +31,7 @@ def partial_gammf_cdf_at_point(mu_hat, sigma_hat):
 
 
 def get_dstar(n_x,y,length):
-    d_after_array = np.abs(np.subtract(n_x, y))
+#    d_after_array = np.abs(np.subtract(n_x, y))
     d_after = np.max(np.abs(np.subtract(n_x, y)))
     y_before = np.arange(length) *  1/length
     d_before_array = np.abs(np.subtract(n_x, y_before))
