@@ -63,7 +63,8 @@ print(f" D star max is {d_star_max}")
 
 
 
-ro = (1 + len([d for d in d_star_s if d >= d_real])) / (BOOTSTRAP_SIZE + 1)
+#ro = (1 + len([d for d in d_star_s if d >= d_real])) / (BOOTSTRAP_SIZE + 1)
+ro  = get_ro(d_star_s, d_real)
 print(f"ro is {ro}")
 
 print("Looking for index of D real max")

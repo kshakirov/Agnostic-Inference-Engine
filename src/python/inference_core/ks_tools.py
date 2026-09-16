@@ -83,7 +83,7 @@ def bootstrap(size, mu,sigma,length,step=bootstrap_normal_step):
 #later change for names n_x 
 
 
-def get_ro(d_star_s, d_real, bootstrap_size):
+def get_ro(d_star_s, d_real):
     return (1 + len([d for d in d_star_s if d >= d_real])) / (len(d_star_s) + 1)
 
 

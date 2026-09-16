@@ -62,6 +62,6 @@ b_d_stars = bootstrap(BOOTSTRAP_SIZE, shape, scale, LENGTH,bootstrap_gamma_step)
 
 print(b_d_stars[10:20])
 
-ro =get_ro(b_d_stars, d_star_real, BOOTSTRAP_SIZE)
+ro =get_ro(b_d_stars, d_star_real)
 
 print(f"ro is {ro} ")
