@@ -84,7 +84,7 @@ def bootstrap(size, mu,sigma,length,step=bootstrap_normal_step):
 
 
 def get_ro(d_star_s, d_real, bootstrap_size):
-    return (1 + len([d for d in d_star_s if d >= d_real])) / (bootstrap_size + 1)
+    return (1 + len([d for d in d_star_s if d >= d_real])) / (len(d_star_s) + 1)
 
 
 def prep_data(file_name, length):
