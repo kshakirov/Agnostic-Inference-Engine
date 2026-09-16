@@ -1,6 +1,6 @@
 import numpy as np
 from math import erf,sqrt
-from inference_core.ks_tools import empirical_cdf, bootstrap,bootstrap_normal_step, partial_cdf_at_point, get_dstar, bootstrap_dstar, get_ro
+from inference_core.ks_tools import empirical_cdf, bootstrap,bootstrap_normal_step, partial_cdf_at_point, get_dstar,  get_ro
 from inference_core.utils import prep_data
 
 ################ЭМПИРИЧЕСКИЕ ДАННЫе #################
@@ -54,10 +54,10 @@ x_log_cdf =lognorm_func_vectorized(x_log)
 
 d_star_real_log = get_dstar(x_log_cdf, y)
 
-d_star_s_log = bootstrap_dstar((x_log_mean, x_log_std), LENGTH,BOOTSTRAP_SIZE)
 
+d_star_s_log = bootstrap(BOOTSTRAP_SIZE, (x_log_mean, x_log_std), LENGTH)
 
 
 ro = get_ro(d_star_s_log, d_star_real_log)
 
-print(f"lognorma ro is {ro}")
+print(f"lognormal ro is {ro}")

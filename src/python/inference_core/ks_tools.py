@@ -41,11 +41,11 @@ def get_dstar(n_x,y):
     return d_real
 
 
-def bootstrap_dstar(params,length, bootstrap_size):
-    d_star_one = bootstrap_normal_step(*params, length)
-    d_star_s =bootstrap(bootstrap_size, params, length)
-    d_star_max = np.max(d_star_s)
-    return d_star_s 
+# def bootstrap_dstar(params,length, bootstrap_size):
+#     d_star_one = bootstrap_normal_step(*params, length)
+#     d_star_s =bootstrap(bootstrap_size, params, length)
+#     d_star_max = np.max(d_star_s)
+#     return d_star_s 
 
 
 def bootstrap_normal_step(mu,sigma, length):
