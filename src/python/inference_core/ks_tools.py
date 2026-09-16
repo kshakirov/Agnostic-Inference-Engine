@@ -87,12 +87,3 @@ def get_ro(d_star_s, d_real):
     return (1 + len([d for d in d_star_s if d >= d_real])) / (len(d_star_s) + 1)
 
 
-def prep_data(file_name, length):
-    """ получить эпирические данные  from file"""
-    np_data = np.zeros(length,dtype=np.float64)
-    with open(file_name) as fd:
-        print(fd)
-        for i, line in enumerate(fd):
-            cells = line.split(',')
-            np_data[i] = float(cells[2])/1000000
-    return np_data
