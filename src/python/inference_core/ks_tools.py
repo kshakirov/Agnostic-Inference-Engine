@@ -1,7 +1,5 @@
 
 import numpy as np
-import array
-import matplotlib.pyplot as plt
 from math import erf,sqrt
 from scipy.stats import gamma
 
