@@ -68,7 +68,6 @@ def bootstrap_normal_step(mu,sigma, length):
 def bootstrap_gamma_step(mu,sigma, length):
     "из названия понятно бутcтрап нормального распределиния один шаг"
     rng = np.random.default_rng()
-#    np_array = rng.normal(loc=mu, scale=sigma, size=length)
     np_array = rng.gamma(shape=mu, scale=sigma, size=length)
     x_cdf,y_after_cdf= empirical_cdf(np_array)
     m, loc, s = gamma.fit(np_array, floc=0)
@@ -77,13 +76,12 @@ def bootstrap_gamma_step(mu,sigma, length):
     ncdf_at_point = partial_gammf_cdf_at_point(m, s)
     vectorized_func = np.vectorize(ncdf_at_point)
     n_x = vectorized_func(x_cdf)
-    d_after = np.max(np.abs(np.subtract(n_x, y_after_cdf)))
-    y_before = np.arange(length) *  1/length
-    d_before = np.max(np.abs(np.subtract(n_x, y_before)))
-    #print(f"D before {d_before} D after {d_after}")
-    d_star= max(d_before,d_after)
-#    print(f"D real is {d_real}")
-    return d_star
+    return get_dstar(n_x, y_after_cdf, length)
+    # d_after = np.max(np.abs(np.subtract(n_x, y_after_cdf)))
+    # y_before = np.arange(length) *  1/length
+    # d_before = np.max(np.abs(np.subtract(n_x, y_before)))
+    # d_star= max(d_before,d_after)
+    # return d_star
 
 
 def bootstrap(size, mu,sigma,length,step=bootstrap_normal_step):

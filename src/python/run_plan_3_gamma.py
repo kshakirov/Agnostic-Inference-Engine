@@ -46,6 +46,8 @@ k_std = sqrt(k_var)
 
 print(f"mean is {k_mean} k_std {k_var} k_std {k_std}")
 
+
+################## KS #####################
 g_cdf = gamma.cdf(x,shape,loc,scale)
 
 d_star_real = get_dstar(g_cdf, y, LENGTH)
