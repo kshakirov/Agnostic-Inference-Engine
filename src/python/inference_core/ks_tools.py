@@ -57,11 +57,12 @@ def bootstrap_normal_step(mu,sigma, length):
     ncdf_at_point = partial_cdf_at_point(m, s)
     vectorized_func = np.vectorize(ncdf_at_point)
     n_x = vectorized_func(x_cdf)
-    d_after = np.max(np.abs(np.subtract(n_x, y_after_cdf)))
-    y_before = np.arange(length) *  1/length
-    d_before = np.max(np.abs(np.subtract(n_x, y_before)))
-    d_star= max(d_before,d_after)
-    return d_star
+    return get_dstar(n_x, y_after_cdf, length)
+    # d_after = np.max(np.abs(np.subtract(n_x, y_after_cdf)))
+    # y_before = np.arange(length) *  1/length
+    # d_before = np.max(np.abs(np.subtract(n_x, y_before)))
+    # d_star= max(d_before,d_after)
+    # return d_star
 
 
 def bootstrap_gamma_step(mu,sigma, length):
