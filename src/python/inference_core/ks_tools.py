@@ -68,11 +68,7 @@ def bootstrap_gamma_step(mu,sigma, length):
     np_array = rng.gamma(shape=mu, scale=sigma, size=length)
     x_cdf,y_after_cdf= empirical_cdf(np_array)
     m, loc, s = gamma.fit(np_array, floc=0)
-    #m = np.mean(np_array)
-    #s = np.std(np_array)
-    ncdf_at_point = partial_gammf_cdf_at_point(m, s)
-    vectorized_func = np.vectorize(ncdf_at_point)
-    n_x = vectorized_func(x_cdf)
+    n_x = gamma.cdf(x_cdf, a=m,scale=s)
     return get_dstar(n_x, y_after_cdf)
 
 
