@@ -30,6 +30,22 @@ def partial_gammf_cdf_at_point(mu_hat, sigma_hat):
     return gamma_cdf_at_point
 
 
+def get_dstar(n_x,y,length):
+    d_after_array = np.abs(np.subtract(n_x, y))
+    d_after = np.max(np.abs(np.subtract(n_x, y)))
+    y_before = np.arange(length) *  1/length
+    d_before_array = np.abs(np.subtract(n_x, y_before))
+    d_before = np.max(np.abs(np.subtract(n_x, y_before)))
+    d_real = max(d_before,d_after)
+    return d_real
+
+
+def bootstrap_dstar(mean, std,length, bootstrap_size):
+    d_star_one = bootstrap_normal_step(mean, std, length)
+    d_star_s =bootstrap(bootstrap_size, mean, std, length)
+    d_star_max = np.max(d_star_s)
+    return d_star_s 
+
 
 def bootstrap_normal_step(mu,sigma, length):
     "из названия понятно бутcтрап нормального распределиния один шаг"
@@ -44,9 +60,7 @@ def bootstrap_normal_step(mu,sigma, length):
     d_after = np.max(np.abs(np.subtract(n_x, y_after_cdf)))
     y_before = np.arange(length) *  1/length
     d_before = np.max(np.abs(np.subtract(n_x, y_before)))
-    #print(f"D before {d_before} D after {d_after}")
     d_star= max(d_before,d_after)
-#    print(f"D real is {d_real}")
     return d_star
 
 
@@ -79,28 +93,7 @@ def bootstrap(size, mu,sigma,length,step=bootstrap_normal_step):
 
 
 #later change for names n_x 
-def get_dstar(n_x,y,length):
-    d_after_array = np.abs(np.subtract(n_x, y))
-    d_after = np.max(np.abs(np.subtract(n_x, y)))
 
-    y_before = np.arange(length) *  1/length
-
-    d_before_array = np.abs(np.subtract(n_x, y_before))
-    d_before = np.max(np.abs(np.subtract(n_x, y_before)))
-
-#    print(f"D before {d_before} D after {d_after}")
-
-    d_real = max(d_before,d_after)
-  #  print(f"D real is {d_real}")
-    return d_real
-
-def bootstrap_dstar(mean, std,length, bootstrap_size):
-    d_star_one = bootstrap_normal_step(mean, std, length)
-    print(f" D star one  is {d_star_one}")
-    d_star_s =bootstrap(bootstrap_size, mean, std, length)
-    d_star_max = np.max(d_star_s)
-    print(f" D star max is {d_star_max}")
-    return d_star_s 
 
 def get_ro(d_star_s, d_real, bootstrap_size):
     return (1 + len([d for d in d_star_s if d >= d_real])) / (bootstrap_size + 1)
