@@ -2,7 +2,7 @@ from  inference_core.wasserman import calculate_empirical_moments
 import numpy as np
 from math import erf,sqrt
 from scipy.stats import lognorm
-from inference_core.ks_tools import empirical_cdf, bootstrap,bootstrap_normal_step, partial_cdf_at_point, get_dstar,  get_ro
+from inference_core.ks_tools import empirical_cdf, bootstrap,bootstrap_normal_step, partial_cdf_at_point, get_dstar,  ks_distance
 from inference_core.utils import prep_data
 
 
@@ -63,7 +63,7 @@ print(f" D star max is {d_star_max}")
 
 
 #ro = (1 + len([d for d in d_star_s if d >= d_real])) / (BOOTSTRAP_SIZE + 1)
-ro  = get_ro(d_star_s, d_real)
+ro  = ks_distance(d_star_s, d_real)
 print(f"ro is {ro}")
 
 print("Looking for index of D real max")

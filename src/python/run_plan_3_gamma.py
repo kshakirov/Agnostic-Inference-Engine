@@ -1,7 +1,7 @@
 import numpy as np
 from math import erf,sqrt
 from scipy.stats import gamma
-from inference_core.ks_tools import empirical_cdf, bootstrap,bootstrap_normal_step, partial_cdf_at_point, get_dstar,  get_ro, bootstrap_gamma_step
+from inference_core.ks_tools import empirical_cdf, bootstrap,bootstrap_normal_step, partial_cdf_at_point, get_dstar,  ks_distance, bootstrap_gamma_step
 from inference_core.utils import prep_data
 
 ################ЭМПИРИЧЕСКИЕ ДАННЫе #################
@@ -62,6 +62,6 @@ b_d_stars = bootstrap(BOOTSTRAP_SIZE, (shape, scale), LENGTH,bootstrap_gamma_ste
 
 print(b_d_stars[10:20])
 
-ro =get_ro(b_d_stars, d_star_real)
+ro =ks_distance(b_d_stars, d_star_real)
 
 print(f"ro is {ro} ")
