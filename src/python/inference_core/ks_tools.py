@@ -30,7 +30,7 @@ def partial_gammf_cdf_at_point(mu_hat, sigma_hat):
     return gamma_cdf_at_point
 
 
-def get_dstar(n_x,y):
+def ks_distance(n_x,y):
 #    d_after_array = np.abs(np.subtract(n_x, y))
     length = len(y)
     d_after = np.max(np.abs(np.subtract(n_x, y)))
@@ -51,7 +51,7 @@ def bootstrap_normal_step(mu,sigma, length,rng):
     ncdf_at_point = partial_cdf_at_point(m, s)
     vectorized_func = np.vectorize(ncdf_at_point)
     n_x = vectorized_func(x_cdf)
-    return get_dstar(n_x, y_after_cdf)
+    return ks_distance(n_x, y_after_cdf)
 
 
 
@@ -62,7 +62,7 @@ def bootstrap_gamma_step(mu,sigma, length, rng):
     x_cdf,y_after_cdf= empirical_cdf(np_array)
     m, loc, s = gamma.fit(np_array, floc=0)
     n_x = gamma.cdf(x_cdf, a=m,scale=s)
-    return get_dstar(n_x, y_after_cdf)
+    return ks_distance(n_x, y_after_cdf)
 
 
 
@@ -77,7 +77,7 @@ def bootstrap(size, params,length,step=bootstrap_normal_step):
 #later change for names n_x 
 
 
-def ks_distance(d_star_s, d_real):
+def bootstrap_p_value(d_star_s, d_real):
     return (1 + len([d for d in d_star_s if d >= d_real])) / (len(d_star_s) + 1)
 
 

@@ -1,7 +1,7 @@
 import numpy as np
 from math import erf,sqrt
 from scipy.stats import gamma
-from inference_core.ks_tools import empirical_cdf, bootstrap,bootstrap_normal_step, partial_cdf_at_point, get_dstar,  ks_distance, bootstrap_gamma_step
+from inference_core.ks_tools import empirical_cdf, bootstrap,bootstrap_normal_step, partial_cdf_at_point, ks_distance,  bootstrap_p_value, bootstrap_gamma_step
 from inference_core.utils import prep_data
 
 ################ЭМПИРИЧЕСКИЕ ДАННЫе #################
@@ -50,7 +50,7 @@ print(f"mean is {k_mean} k_std {k_var} k_std {k_std}")
 ################## KS #####################
 g_cdf = gamma.cdf(x,shape,loc,scale)
 
-d_star_real = get_dstar(g_cdf, y)
+d_star_real = ks_distance(g_cdf, y)
 
 print(f"d_star is {d_star_real}")
 
@@ -62,6 +62,6 @@ b_d_stars = bootstrap(BOOTSTRAP_SIZE, (shape, scale), LENGTH,bootstrap_gamma_ste
 
 print(b_d_stars[10:20])
 
-ro =ks_distance(b_d_stars, d_star_real)
+ro =bootstrap_p_value(b_d_stars, d_star_real)
 
 print(f"ro is {ro} ")
