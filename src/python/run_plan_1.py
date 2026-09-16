@@ -1,7 +1,7 @@
 from  inference_core.wasserman import calculate_empirical_moments
 import numpy as np
 from math import erf,sqrt
-from scipy.stats import lognorm
+
 from inference_core.ks_tools import empirical_cdf, bootstrap,bootstrap_normal_step, partial_cdf_at_point, ks_distance,  bootstrap_p_value
 from inference_core.utils import prep_data
 
