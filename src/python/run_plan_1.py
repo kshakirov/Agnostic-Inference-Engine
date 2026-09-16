@@ -53,8 +53,8 @@ d_real = max(d_before,d_after)
 print(f"D real is {d_real}")
 
 
-d_star_one = bootstrap_normal_step(mean, std, LENGTH)
-print(f" D star one  is {d_star_one}")
+#d_star_one = bootstrap_normal_step(mean, std, LENGTH)
+#print(f" D star one  is {d_star_one}")
 d_star_s =bootstrap(BOOTSTRAP_SIZE, (mean, std), LENGTH)
 d_star_max = np.max(d_star_s)
 

@@ -54,9 +54,9 @@ d_star_real = get_dstar(g_cdf, y)
 
 print(f"d_star is {d_star_real}")
 
-b_d_star = bootstrap_gamma_step(shape, scale, LENGTH)
+#b_d_star = bootstrap_gamma_step(shape, scale, LENGTH)
 
-print(f"b d_star is {b_d_star}")
+#print(f"b d_star is {b_d_star}")
 
 b_d_stars = bootstrap(BOOTSTRAP_SIZE, (shape, scale), LENGTH,bootstrap_gamma_step)
 
