@@ -22,11 +22,6 @@ def partial_cdf_at_point(mu_hat, sigma_hat):
         return 0.5 * ( 1 + erf(z/sqrt(2)))
     return ncdf_at_point
 
-def partial_gammf_cdf_at_point(mu_hat, sigma_hat):
-    def gamma_cdf_at_point(x):
-        return gamma.cdf(x, a=mu_hat, scale=sigma_hat)
-    return gamma_cdf_at_point
-
 
 def ks_distance(n_x,y):
 #    d_after_array = np.abs(np.subtract(n_x, y))
