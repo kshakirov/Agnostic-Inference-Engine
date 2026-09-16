@@ -2,7 +2,7 @@ import numpy as np
 import array
 from math import erf,sqrt
 from scipy.stats import gamma
-from inference_core.ks_tools import empirical_cdf, bootstrap_normal,bootstrap_normal_step, partial_cdf_at_point, get_dstar, bootstrap_dstar, get_ro, prep_data, bootstrap_gamma_step
+from inference_core.ks_tools import empirical_cdf, bootstrap,bootstrap_normal_step, partial_cdf_at_point, get_dstar, bootstrap_dstar, get_ro, prep_data, bootstrap_gamma_step
 
 ################ЭМПИРИЧЕСКИЕ ДАННЫе #################
 #констаны для получения данных
@@ -56,7 +56,7 @@ b_d_star = bootstrap_gamma_step(shape, scale, LENGTH)
 
 print(f"b d_star is {b_d_star}")
 
-b_d_stars = bootstrap_normal(BOOTSTRAP_SIZE, shape, scale, LENGTH,bootstrap_gamma_step)
+b_d_stars = bootstrap(BOOTSTRAP_SIZE, shape, scale, LENGTH,bootstrap_gamma_step)
 
 print(b_d_stars[10:20])
 

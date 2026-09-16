@@ -4,7 +4,7 @@ import array
 import matplotlib.pyplot as plt
 from math import erf,sqrt
 from scipy.stats import lognorm
-from inference_core.ks_tools import empirical_cdf, bootstrap_normal,bootstrap_normal_step, partial_cdf_at_point, get_dstar, bootstrap_dstar, get_ro, prep_data
+from inference_core.ks_tools import empirical_cdf, bootstrap,bootstrap_normal_step, partial_cdf_at_point, get_dstar, bootstrap_dstar, get_ro, prep_data
 
 
 ################ЭМПИРИЧЕСКИЕ ДАННЫе #################
@@ -56,7 +56,7 @@ print(f"D real is {d_real}")
 
 d_star_one = bootstrap_normal_step(mean, std, LENGTH)
 print(f" D star one  is {d_star_one}")
-d_star_s =bootstrap_normal(BOOTSTRAP_SIZE, mean, std, LENGTH)
+d_star_s =bootstrap(BOOTSTRAP_SIZE, mean, std, LENGTH)
 d_star_max = np.max(d_star_s)
 
 print(f" D star max is {d_star_max}")
