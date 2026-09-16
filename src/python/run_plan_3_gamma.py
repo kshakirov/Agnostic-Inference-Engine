@@ -1,8 +1,8 @@
 import numpy as np
-import array
 from math import erf,sqrt
 from scipy.stats import gamma
-from inference_core.ks_tools import empirical_cdf, bootstrap,bootstrap_normal_step, partial_cdf_at_point, get_dstar, bootstrap_dstar, get_ro, prep_data, bootstrap_gamma_step
+from inference_core.ks_tools import empirical_cdf, bootstrap,bootstrap_normal_step, partial_cdf_at_point, get_dstar, bootstrap_dstar, get_ro, bootstrap_gamma_step
+from inference_core.utils import prep_data
 
 ################ЭМПИРИЧЕСКИЕ ДАННЫе #################
 #констаны для получения данных
