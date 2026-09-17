@@ -1,7 +1,7 @@
 
 import numpy as np
 from math import erf,sqrt
-from scipy.stats import gamma
+from scipy.stats import gamma, weibull_min
 
 def empirical_cdf(sample):
     """ caclulates empirical cdf"""
@@ -55,6 +55,15 @@ def bootstrap_gamma_step(mu,sigma, length, rng):
     x_cdf,y_after_cdf= empirical_cdf(np_array)
     m, loc, s = gamma.fit(np_array, floc=0)
     n_x = gamma.cdf(x_cdf, a=m,scale=s)
+    return ks_distance(n_x, y_after_cdf)
+
+
+def bootstrap_weibull_step(a,scale, length, rng):
+    "из названия понятно бутcтрап нормального распределиния один шаг"
+    np_array = scale * rng.weibull(a=a, size=length)
+    x_cdf,y_after_cdf= empirical_cdf(np_array)
+    k_hat, loc, lam_hat = weibull_min.fit(np_array, floc=0)
+    n_x = weibull_min.cdf(x_cdf, c=k_hat, scale=lam_hat)
     return ks_distance(n_x, y_after_cdf)
 
 
