@@ -66,6 +66,13 @@ print(f" D star max is {d_star_max}")
 ro  = bootstrap_p_value(d_star_s, d_real)
 print(f"ro is {ro}")
 
+
+
+
+
+############### KS games ###############
+
+
 print("Looking for index of D real max")
 
 print("which d_after or d_before won")
@@ -126,3 +133,22 @@ def outliers_env(cdf_x,cdf_y, data):
 
 outliers_env(x, y, np_data)
 
+
+
+############### P -value  ###############
+
+print(f"Working with p value, normal is H0 hypthesis")
+
+d_star_s_mean =np.mean(d_star_s)
+
+print(f"D* mean is {d_star_s_mean}")
+
+d_star_s_empirical_x, d_star_s_empirical_y = empirical_cdf(d_star_s)
+
+
+
+
+
+qauantile_95 = quantile(d_star_s_empirical_x, d_star_s_empirical_y, 0.95)
+
+print(f"procentile95 of D* s  CDF  array {qauantile_95} ")
