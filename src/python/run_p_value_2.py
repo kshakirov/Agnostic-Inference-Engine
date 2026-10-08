@@ -1,4 +1,5 @@
 from  inference_core.wasserman import calculate_empirical_moments
+from inference_core.wald_test_conf_interval import wald_test, confidence_interval, p_value,power
 import numpy as np
 from math import erf,sqrt,floor
 from scipy.stats import norm
@@ -82,3 +83,17 @@ for i in grades:
     right_zeros_i = 1 - norm.cdf(right_interval_2)
     prob =  left_zeros_i + right_zeros_i
     print(f"power({i}) = {prob}")
+
+
+print(f"testing module ")
+
+w_test = wald_test(np_data_1, np_data_2)
+
+conf_int = confidence_interval(np_data_1, np_data_2, 1.96)
+
+p_v = p_value(w_test)
+
+pw_2 = power(2,np_data_1,np_data_2,1.96)
+pw_0 = power(0,np_data_1,np_data_2,1.96)
+
+print(f" w test {w_test}, confidence interval is {conf_int} p value is {p_v} power for 2 is {pw_2} power for 0 is {pw_0}")
