@@ -38,16 +38,22 @@ print(f"for 2 we have 2 points with h = 1 x_i=1 {kde_part(2,1,1)} and x_i=3 {kde
 
 print("now the whole part")
 
-def kde_part_2(data, h):
+def kde(data, h):
     n=len(data)
     for i in data:
         f_i=0
         for y in data:
-            k_i = kde_part(i, y, 1)
+            k_i = kde_part(i, y, h)
             #print(k_i,end=" ")
             f_i+=k_i
         f_i= 1/(h * n) * f_i
         print(f"for {i} we have kde = {f_i}")
+        return f_i
 
 
-kde_part_2(test_data, 1)
+kde(test_data, 1)
+
+
+def cross_validate_kde_step(data, index,h):
+     return kde(data[:index] + data[index+1:], h)
+print(f"cross validation step for 0 is {cross_validate_kde_step(test_data, 0,1)}")
