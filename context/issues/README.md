@@ -9,5 +9,6 @@ Snapshot date: **2026-09-02**.
 | [#3](0003-bootstrap-monte-carlo.md) | Open | Empirical Bootstrap Monte Carlo Engine | — |
 | [#4](0004-mle-core-engine.md) | Open | Maximum Likelihood Estimation Core Engine | — |
 | [#5](0005-real-server-latency.md) | Open | Real Server Latency: From Empirical Baseline to Parametric Model | — |
+| [#6](0006-kde.md) | Open | KDE: плотность без заранее выбранной формы | — |
 
 Remote index: https://github.com/kshakirov/Agnostic-Inference-Engine/issues
