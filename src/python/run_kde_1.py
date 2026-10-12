@@ -39,15 +39,15 @@ print(f"for 2 we have 2 points with h = 1 x_i=1 {kde_part(2,1,1)} and x_i=3 {kde
 print("now the whole part")
 
 def kde_part_2(data, h):
-    n=len(test_data)
-    for i in test_data:
+    n=len(data)
+    for i in data:
         f_i=0
-        for y in test_data:
+        for y in data:
             k_i = kde_part(i, y, 1)
             #print(k_i,end=" ")
-            f_i+=k_i_i
-            f_i= 1/(h * n) * f_i
-            print(f"for {i} we have kde = {f_i}")
+            f_i+=k_i
+        f_i= 1/(h * n) * f_i
+        print(f"for {i} we have kde = {f_i}")
 
 
 kde_part_2(test_data, 1)
