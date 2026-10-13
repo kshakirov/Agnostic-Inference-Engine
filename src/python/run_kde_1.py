@@ -1,7 +1,7 @@
 from  inference_core.wasserman import calculate_empirical_moments
 from inference_core.wald_test_conf_interval import wald_test, confidence_interval
 import numpy as np
-from math import erf,sqrt,floor
+from math import erf,sqrt,floor,log
 from scipy.stats import norm
 
 
@@ -18,7 +18,7 @@ FILE_NAME_2 = "/Users/kiryloshakirov/Documents/ChatGPT/Agnostic-Inference-Engine
 np_data_2 = prep_data(FILE_NAME_2, LENGTH)
 
 
-test_data = [1,2,2,3,7]
+test_data = np.array([1,2,2,3,7])
 x =2
 h=1
 def norm_kernel(x):
@@ -61,5 +61,31 @@ kde(test_data, 1)
 
 def cross_validate_kde_step(data, x,index,h):
     n = len(data)
-    return kde_step(data[:index] + data[index+1:],x, h,n - 1)
+#    return kde_step(data[:index] + data[index+1:],x, h,n - 1)
+    return kde_step(np.delete(data, index), x, h, n - 1)
 print(f"cross validation step for 0 is {cross_validate_kde_step(test_data, 1,0,1)}")
+
+def cross_validate_kde(data,h):
+    log_cvs=0
+    n = len(data)
+    for index in range(len(data)):
+        cv= cross_validate_kde_step(data, data[index], index, h)
+        log_cvs += log(cv)
+#        print(f"cross validation step for {data[index]} is {cv}, ln is {log(cv)}")
+    return (log_cvs / n)
+
+ln_agv_h = cross_validate_kde(test_data, 1)
+#print(f"for h =1 avg ln is {ln_agv_h}")
+
+
+def max_kde(data):
+    ln_agv_h =-100
+    for i in range(len(data)):
+        ln_i =cross_validate_kde(data, data[i])
+        if ln_i > ln_agv_h:
+            ln_agv_h = ln_i
+            
+        print(f"for h ={data[i]} avg ln is {ln_i} but max is {ln_agv_h}")
+    
+max_kde(test_data)
+#max_kde(np_data_1)
