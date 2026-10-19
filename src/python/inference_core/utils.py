@@ -6,4 +6,6 @@ def prep_data(file_name, length):
         for i, line in enumerate(fd):
             cells = line.split(',')
             np_data[i] = float(cells[2])/1000000
+            if(i == length -1):
+                break
     return np_data

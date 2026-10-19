@@ -7,15 +7,15 @@ from scipy.stats import norm
 
 from inference_core.utils import prep_data
 
-FILE_NAME_1 = "/Users/kiryloshakirov/Documents/ChatGPT/Agnostic-Inference-Engine/experiments/latency/2026-10-05-baseline-c/baseline-c.csv"
+FILE_NAME_1 = "/Users/kiryloshakirov/Documents/ChatGPT/Agnostic-Inference-Engine/experiments/latency/sclerotix/post_index_16b/20261019T034154Z/run-001/samples.csv"
 
-LENGTH = 600
+LENGTH = 6
 np_data_1 = prep_data(FILE_NAME_1, LENGTH)
 
-FILE_NAME_2 = "/Users/kiryloshakirov/Documents/ChatGPT/Agnostic-Inference-Engine/experiments/latency/2026-09-24-baseline-b/baseline-b.csv"
+#FILE_NAME_2 = "/Users/kiryloshakirov/Documents/ChatGPT/Agnostic-Inference-Engine/experiments/latency/2026-09-24-baseline-b/baseline-b.csv"
 
 
-np_data_2 = prep_data(FILE_NAME_2, LENGTH)
+#np_data_2 = prep_data(FILE_NAME_2, LENGTH)
 
 
 test_data = np.array([1,2,2,3,7])
