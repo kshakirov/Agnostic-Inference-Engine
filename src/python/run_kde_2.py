@@ -57,7 +57,7 @@ def kde(data,dm, h):
     return f_i
 
 #kde_step(test_data, diff_matrix, 0, h, len(test_data))
-kde(test_data, diff_matrix, 1)
+#kde(test_data, diff_matrix, 1)
 
 #x is notneedded 
 def cross_validate_kde_step(data,dm, x,index,h):
@@ -75,7 +75,7 @@ def cross_validate_kde(data,dm,h):
 #        print(f"cross validation step for {data[index]} is {cv}, ln is {log(cv)}")
     return (log_cvs / n)
 
-ln_agv_h = cross_validate_kde(test_data,diff_matrix, 1)
+#ln_agv_h = cross_validate_kde(test_data,diff_matrix, 1)
 print(f"for h =1 avg ln is {ln_agv_h}")
 
 
@@ -88,4 +88,4 @@ def max_kde(data,dm):
             
         print(f"for h ={data[i]} avg ln is {ln_i} but max is {ln_agv_h}")
 
-max_kde(test_data,diff_matrix)
+#max_kde(test_data,diff_matrix)
