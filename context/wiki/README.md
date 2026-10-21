@@ -1,6 +1,6 @@
 # GitHub Wiki
 
-Локальный снимок Wiki на **2026-08-25**.
+Локальный снимок Wiki на **2026-10-21**.
 
 - [Home](Home.md)
 - [First approach: генерация синтетического трафика](first-approach.md)
@@ -13,5 +13,6 @@
 - [Research Tracks — куда копать](Research-Tracks.md)
 - [SETUP-001 — Джейнс и статистика в PostgreSQL](SETUP-001.md)
 - [PROCESS-001 — Учёба как игра в различение](PROCESS-001.md)
+- [TOOLS-001 — Что уже лежит в ящике](TOOLS-001.md)
 
 Каноническая Wiki: https://github.com/kshakirov/Agnostic-Inference-Engine/wiki

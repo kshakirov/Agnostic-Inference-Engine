@@ -5,3 +5,4 @@
 - [Генерация тестовых данных](generate-test-data.md)
 - [Theory Lab — журнал понимания](Theory-Lab.md)
 - [Research Tracks — куда копать](Research-Tracks.md)
+- [TOOLS-001 — Что уже лежит в ящике](TOOLS-001.md)
