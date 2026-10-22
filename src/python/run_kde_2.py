@@ -75,7 +75,7 @@ def choose_h_candidates(h_star, r):
 
         
 def cross_validate_kde(diff_matrix, candidates):
-    ln_agv_h =-100
+    ln_agv_h = float("-inf")
     h_max = 0
     i_max = 0
     for i in range(len(candidates)):
@@ -85,7 +85,7 @@ def cross_validate_kde(diff_matrix, candidates):
             h_max = candidates[i]
             i_max = i
             
-        print(f"for h ={i} avg ln is {ln_i} but max is {ln_agv_h}")
+        print(f"for h ={candidates[i]} avg ln is {ln_i} but max is {ln_agv_h}")
     print(f"maximum is at h= {h_max} and is {ln_agv_h}")
     print(f"the closest are {candidates[i_max -1]},{candidates[i_max + 1]}")
     new_step = abs(candidates[i_max -1] - candidates[i_max + 1])/ 10.0
@@ -100,5 +100,16 @@ def cross_validate_kde(diff_matrix, candidates):
             
         print(f"for h ={s} avg ln is {ln_i} but max is {ln_agv_h}")
     print(f"maximum is at h= {h_max} and is {ln_agv_h}")
+    return h_max, ln_agv_h
 #searching for maximum not at the extremes
-cross_validate_kde(diff_matrix, choose_h_candidates(h_star, 10))
+h_selected, score = cross_validate_kde(diff_matrix, choose_h_candidates(h_star, 10))
+
+
+
+kernel_matrix = norm.pdf(diff_matrix / h_selected)
+density = np.sum(kernel_matrix, axis=1) / (LENGTH * h_selected)
+
+print(density)
+
+for i in [100, 300]:
+    print(test_data[i], density[i])
