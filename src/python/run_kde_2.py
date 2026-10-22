@@ -56,3 +56,49 @@ s = np.std(test_data)
 
 h_star = 0.9 * min(s, IQR / 1.34) * LENGTH **(-0.2)
 print(f"h* is {h_star}")
+
+
+print("Choosing candidates")
+
+
+
+def choose_h_candidates(h_star, r):
+    cs = []
+    ks = range(-r,r,1)
+    print(ks)
+    for k in ks:
+        h_i= h_star * (2 ** (k/2))
+        cs.append(h_i)
+    return cs
+    
+
+
+        
+def cross_validate_kde(diff_matrix, candidates):
+    ln_agv_h =-100
+    h_max = 0
+    i_max = 0
+    for i in range(len(candidates)):
+        ln_i =kde(diff_matrix, candidates[i])
+        if ln_i > ln_agv_h:
+            ln_agv_h = ln_i
+            h_max = candidates[i]
+            i_max = i
+            
+        print(f"for h ={i} avg ln is {ln_i} but max is {ln_agv_h}")
+    print(f"maximum is at h= {h_max} and is {ln_agv_h}")
+    print(f"the closest are {candidates[i_max -1]},{candidates[i_max + 1]}")
+    new_step = abs(candidates[i_max -1] - candidates[i_max + 1])/ 10.0
+    print(new_step)
+    for i in range(10):
+        s = candidates[i_max - 1] + new_step * i
+        ln_i =kde(diff_matrix, s)
+        if ln_i > ln_agv_h:
+            ln_agv_h = ln_i
+            h_max = s
+
+            
+        print(f"for h ={s} avg ln is {ln_i} but max is {ln_agv_h}")
+    print(f"maximum is at h= {h_max} and is {ln_agv_h}")
+#searching for maximum not at the extremes
+cross_validate_kde(diff_matrix, choose_h_candidates(h_star, 10))
