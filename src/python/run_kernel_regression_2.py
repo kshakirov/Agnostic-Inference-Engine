@@ -10,7 +10,7 @@ from inference_core.utils import prep_data
 def file_template(size,run="001"):
     return f"/Users/kiryloshakirov/Documents/ChatGPT/Agnostic-Inference-Engine/experiments/latency/sclerotix/post-body-matrix/body-{size}b-run-{run}.csv"
 
-LENGTH = 3
+LENGTH = 1000
 
 latency_vector = np.array([])
 
@@ -75,7 +75,7 @@ assert(w_m.shape == (body_sizes.size,latency_vector.size))
 
 estimated_latencies = estimate_latency(w_m, latency_vector)
 assert(body_sizes.size == estimated_latencies.size)
-print(estimated_latencies)
+#print(estimated_latencies)
 
 
 #nullify_size_col_values(w_m, body_sizes_log2, LENGTH)
@@ -85,9 +85,23 @@ h_values = np.array([
     0.25, 0.5, 0.75, 1.0, 1.5, 2.0, 3.0
 ])
 
+min_error=    float('inf')
+best_h =0
+real_means = latency_vector.reshape(
+    body_sizes.size, LENGTH
+).mean(axis=1)
+
 for h in h_values:
     w_m_local = create_weight_matrix(diff_matrix, h)
     nullify_size_col_values(w_m_local, body_sizes, LENGTH)
     w_m_local = normalize_weight_matrix(w_m_local)
     estimated_latencies_local = estimate_latency(w_m_local, latency_vector)
-    print(estimated_latencies_local)
+    diffs = np.subtract(real_means, estimated_latencies_local)
+    square_diffs =np.square(diffs)
+    avg_square_diffs = np.mean(square_diffs)
+    print(f" h = {h} mse = {avg_square_diffs} choosing the best ")
+    if avg_square_diffs < min_error:
+        min_error = avg_square_diffs
+        best_h = h
+
+print(f"best h = {best_h} with error {min_error}")
