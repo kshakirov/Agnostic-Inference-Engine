@@ -9,3 +9,7 @@ def prep_data(file_name, length):
             if(i == length -1):
                 break
     return np_data
+
+
+def difference_matrix(points, observations):
+    return points[:, None] - observations[None, :]
