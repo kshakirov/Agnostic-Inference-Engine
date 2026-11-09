@@ -7,11 +7,36 @@ from inference_core.utils import difference_matrix
 
 from inference_core.utils import prep_data
 
+
+def file_template(size,run="001"):
+    return f"/Users/kiryloshakirov/Documents/ChatGPT/Agnostic-Inference-Engine/experiments/latency/sclerotix/post-body-matrix/body-{size}b-run-{run}.csv"
+
+
+
 LENGTH = 3
 x = np.array([1, 2, 3])
 y = np.array([1, 3, 3])
 
 
+
+body_sizes = np.array([
+    16, 32, 64, 128, 256, 512, 1024,
+    2048, 4096, 8192, 16384, 32768, 65536,
+])
+
+
+def log_body_sizes(b_s):
+    return np.log2(b_s)
+
+LENGTH = 1000
+xx = []
+for s in body_sizes:
+    d = prep_data(file_template(s),LENGTH)
+    xx.append(np.average(d))
+x = log_body_sizes(body_sizes)
+y = np.array(xx)
+print(x)
+print(y)
 
 
 
@@ -62,3 +87,5 @@ solution = np.linalg.solve(
 ).squeeze(-1)
 
 print(solution)
+print(d_m)
+print(W)
