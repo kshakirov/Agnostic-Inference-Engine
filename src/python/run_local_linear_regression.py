@@ -21,7 +21,8 @@ print(d_m)
 
 h = 1
 W = np.exp(-(d_m ** 2) / (2 * h ** 2))
-print(W)
+W= np.fill_diagonal(W,0)
+#print(W)
 a_j = np.sum(np.square(d_m),axis=1)
 print(a_j)
 
