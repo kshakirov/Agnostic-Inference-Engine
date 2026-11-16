@@ -7,59 +7,63 @@ from inference_core.utils import difference_matrix
 
 from inference_core.utils import prep_data
 
+from inference_core.local_linear_regression_tools import local_linear_regression
+
 LENGTH = 3
 x = np.array([1, 2, 3])
 y = np.array([1, 3, 3])
 
-
-
-
-
-d_m = -1 * difference_matrix(x, x)
-
-print(d_m)
-
-h = 1
-W = np.exp(-(d_m ** 2) / (2 * h ** 2))
-W= np.fill_diagonal(W,0)
-#print(W)
-a_j = np.sum(np.square(d_m),axis=1)
-print(a_j)
-
-
-b_j = np.repeat(LENGTH, LENGTH)
-c_j = np.sum(np.multiply(d_m,2), axis=1)
-print(c_j)
-
-d_j = - 2 * np.sum( np.multiply(y,d_m), axis=1)
-
-print(d_j)
-
-
-e_j = -2 * np.sum(y)
-print(e_j)
-
-
-f_j= np.sum(np.square(y))
-print(f_j)
-
-#mA = np.array([[2*a_j, c_j],[c_j, 2*b_j]]).transpose(2,0,1)
-#b = np.array([-d_j, -e_j])
-
-
-mA = np.array([
-    [2*a_j, c_j],
-    [c_j, 2*b_j]
-]).transpose(2, 0, 1)
-
-rhs = np.array([
-    -d_j,
-    np.full_like(d_j, -e_j)
-]).T
-
-solution = np.linalg.solve(
-    mA,
-    rhs[..., None]
-).squeeze(-1)
-
+solution = local_linear_regression(x, y)
 print(solution)
+
+
+
+
+# d_m = -1 * difference_matrix(x, x)
+
+# print(d_m)
+
+# h = 1
+# W = np.exp(-(d_m ** 2) / (2 * h ** 2))
+# W= np.fill_diagonal(W,0)
+# #print(W)
+# a_j = np.sum(np.square(d_m),axis=1)
+# print(a_j)
+
+
+# b_j = np.repeat(LENGTH, LENGTH)
+# c_j = np.sum(np.multiply(d_m,2), axis=1)
+# print(c_j)
+
+# d_j = - 2 * np.sum( np.multiply(y,d_m), axis=1)
+
+# print(d_j)
+
+
+# e_j = -2 * np.sum(y)
+# print(e_j)
+
+
+# f_j= np.sum(np.square(y))
+# print(f_j)
+
+# #mA = np.array([[2*a_j, c_j],[c_j, 2*b_j]]).transpose(2,0,1)
+# #b = np.array([-d_j, -e_j])
+
+
+# mA = np.array([
+#     [2*a_j, c_j],
+#     [c_j, 2*b_j]
+# ]).transpose(2, 0, 1)
+
+# rhs = np.array([
+#     -d_j,
+#     np.full_like(d_j, -e_j)
+# ]).T
+
+# solution = np.linalg.solve(
+#     mA,
+#     rhs[..., None]
+# ).squeeze(-1)
+
+# print(solution)
