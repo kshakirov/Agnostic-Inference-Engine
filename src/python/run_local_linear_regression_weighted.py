@@ -6,7 +6,7 @@ from scipy.stats import norm
 from inference_core.utils import difference_matrix
 
 from inference_core.utils import prep_data
-
+from inference_core.local_linear_regression_tools import local_linear_regression_weighted
 
 def file_template(size,run="001"):
     return f"/Users/kiryloshakirov/Documents/ChatGPT/Agnostic-Inference-Engine/experiments/latency/sclerotix/post-body-matrix/body-{size}b-run-{run}.csv"
@@ -32,47 +32,4 @@ y = np.array(xx)
 #print(y)
 
 
-
-d_m = -1 * difference_matrix(x, x)
-
-#print(d_m)
-np.set_printoptions(suppress=True)
-for h in [0.1,0.2,0.4,0.8,1,2,3,4,5,6]:
-#  h = 1
-  W = np.exp(-(d_m ** 2) / (2 * h ** 2))
-  np.fill_diagonal(W,0)
-  #print(W)
-  a_j = np.sum(np.multiply(W, np.square(d_m)),axis=1)
-  #print(a_j)
-  b_j = np.sum(W,axis=1)
-  c_j = np.sum((2 * np.multiply(d_m,W)), axis=1)
-  #print(c_j)
-  d_j = - 2 * np.sum( y * d_m * W, axis=1)
-  #print(d_j)
-  e_j = -2 * np.sum(y * W, axis=1)
-  #print(e_j)
-  f_j= np.sum(np.square(y) * W, axis=1)
-  #print(f_j)
-  mA = np.array([
-      [2*a_j, c_j],
-      [c_j, 2*b_j]
-  ]).transpose(2, 0, 1)
-
-  rhs = np.array([
-      -d_j,
-      -e_j
-  ]).T
-
-  solution = np.linalg.solve(
-      mA,
-      rhs[..., None]
-  ).squeeze(-1)
-
-#  print(solution)
-
-  prediction = solution[:,1]
-  #print(prediction)
-
-
-  cv = np.average( np.square(np.subtract(y,prediction)))
-  print(f"h={h}, cv= {cv} max cond = {np.max(np.linalg.cond(mA))}")
+local_linear_regression_weighted(x, y, [0.1,0.2,0.4,0.8,1,2,3,4,5,6])
