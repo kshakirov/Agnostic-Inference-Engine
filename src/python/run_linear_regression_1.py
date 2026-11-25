@@ -1,41 +1,31 @@
 import numpy as np
-from inference_core.local_linear_regression_tools import local_linear_regression
 
+from inference_core.linear_regression_tools import simple_linear_regression
+from inference_core.utils import prep_data
 
 x = np.array([1., 2., 3., 4.])
 y = np.array([2., 3., 5., 4.])
 
-
-x_0 = np.mean(x)
-print(f"x_0 = {x_0}")
-
-d_vector =  x - x_0
-print(f"d_i {d_vector}")
-d_vector_sqr = np.square(d_vector)
-print(f"d_i ** 2 = {d_vector_sqr}")
-
-a = np.sum(d_vector_sqr)
-print(f"A = {a}")
-
-b = len(x)
-print(f"B = {b}")
-
-c =0
-
-d = -2 * np.sum(y * d_vector)
-print(f"D = {d}")
+def file_template(size,run="001"):
+    return f"/Users/kiryloshakirov/Documents/ChatGPT/Agnostic-Inference-Engine/experiments/latency/sclerotix/post-body-matrix/body-{size}b-run-{run}.csv"
 
 
-e = -2 * np.sum(y)
-print(f"E = {e}")
+body_sizes = np.array([
+    16, 32, 64, 128, 256, 512, 1024,
+    2048, 4096, 8192, 16384, 32768, 65536,
+])
 
-m_aa = 2 *a
-m_bb = 2 *b
 
-r_a  = - d
-r_b = - e
+LENGTH = 1000
 
-A = r_a / m_aa
-B = r_b /m_bb - x_0 * A
+latencies = []
+for y_i in body_sizes:
+    x_i = prep_data(file_template(y_i), LENGTH)
+    latencies.append(np.average(x_i))
+print(f"y={latencies}")
+print(f"x = {body_sizes}")
+x = body_sizes
+y = np.array(latencies)
+A,B = simple_linear_regression(x, y)
 
 print(f"solution is {A}x + {B}")

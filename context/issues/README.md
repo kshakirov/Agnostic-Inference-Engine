@@ -10,5 +10,8 @@ Snapshot date: **2026-09-02**.
 | [#4](0004-mle-core-engine.md) | Open | Maximum Likelihood Estimation Core Engine | — |
 | [#5](0005-real-server-latency.md) | Open | Real Server Latency: From Empirical Baseline to Parametric Model | — |
 | [#6](0006-kde.md) | Open | KDE: плотность без заранее выбранной формы | — |
+| [#7](0007-local-linear-regression.md) | Open | Research: Local Linear Regression | — |
+| [#8](0008-global-linear-regression.md) | Open | Research: Global Linear Regression | — |
+| [#9](0009-cpp23-computing-foundations.md) | Open | Engineering Spike: C++23 Mathematical Computing Foundations | — |
 
 Remote index: https://github.com/kshakirov/Agnostic-Inference-Engine/issues

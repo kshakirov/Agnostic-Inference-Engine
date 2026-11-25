@@ -1,8 +1,26 @@
 # GitHub Wiki
 
-Локальный снимок Wiki на **2026-10-21**.
+Локальный рабочий снимок Wiki. Новая навигация подготовлена **2026-11-24** и
+пока не опубликована в GitHub Wiki.
 
-- [Home](Home.md)
+## Навигация
+
+- [Home — English](Home.md)
+- [Home — Русская лаборатория](Home-RU.md)
+- [Sidebar](_Sidebar.md)
+- [Foundations](Foundations.md)
+- [Statistics Map](STATISTICS_MAP.md)
+- [Philosophy of Inference](Philosophy-of-Inference.md)
+- [Research and Engineering Methodology](Research-and-Engineering-Methodology.md)
+- [Методология исследования и разработки](Research-and-Engineering-Methodology-RU.md)
+- [Architecture](Architecture.md)
+- [Engineering Decisions](Engineering-Decisions.md)
+- [Research — English](Research.md)
+- [Исследования — рабочая карта](Research-RU.md)
+- [Experiments](Experiments.md)
+
+## Существующие рабочие страницы
+
 - [First approach: генерация синтетического трафика](first-approach.md)
 - [Generate test data](generate-test-data.md)
 - [Theory Lab — журнал понимания](Theory-Lab.md)
