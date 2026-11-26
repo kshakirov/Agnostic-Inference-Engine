@@ -1,6 +1,6 @@
 
 import random
-from  inference_core.wasserman import calculate_empirical_moments
+from  inference_core.estimation.wasserman import calculate_empirical_moments
 # Принудительное обновление при каждом C-c C-c
 
 

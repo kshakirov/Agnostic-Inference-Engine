@@ -1,6 +1,6 @@
 import numpy as np
 
-from inference_core.linear_regression_tools import simple_linear_regression
+from inference_core.estimation.linear_regression_tools import simple_linear_regression
 from inference_core.utils import prep_data
 
 x = np.array([1., 2., 3., 4.])

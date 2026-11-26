@@ -1,5 +1,5 @@
-from  inference_core.wasserman import calculate_empirical_moments
-from inference_core.wald_test_conf_interval import wald_test, confidence_interval, p_value,power
+from  inference_core.estimation.wasserman import calculate_empirical_moments
+from inference_core.uncertainty_quantification.wald_test_conf_interval import wald_test, confidence_interval, p_value,power
 import numpy as np
 from math import erf,sqrt,floor
 from scipy.stats import norm

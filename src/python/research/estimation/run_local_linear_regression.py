@@ -1,5 +1,5 @@
-from  inference_core.wasserman import calculate_empirical_moments
-from inference_core.wald_test_conf_interval import wald_test, confidence_interval
+from  inference_core.estimation.wasserman import calculate_empirical_moments
+from inference_core.uncertainty_quantification.wald_test_conf_interval import wald_test, confidence_interval
 import numpy as np
 from math import erf,sqrt,floor,log
 from scipy.stats import norm
@@ -7,7 +7,7 @@ from inference_core.utils import difference_matrix
 
 from inference_core.utils import prep_data
 
-from inference_core.local_linear_regression_tools import local_linear_regression
+from inference_core.estimation.local_linear_regression_tools import local_linear_regression
 
 LENGTH = 3
 x = np.array([1, 2, 3])

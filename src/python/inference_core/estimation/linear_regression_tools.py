@@ -1,5 +1,5 @@
 import numpy as np
-from inference_core.local_linear_regression_tools import local_linear_regression
+from inference_core.estimation.local_linear_regression_tools import local_linear_regression
 
 
 x = np.array([1., 2., 3., 4.])

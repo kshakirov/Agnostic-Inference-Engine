@@ -1,4 +1,4 @@
-from  inference_core.wasserman import calculate_empirical_moments
+from  inference_core.estimation.wasserman import calculate_empirical_moments
 import numpy as np
 from math import erf,sqrt,floor
 from scipy.stats import norm

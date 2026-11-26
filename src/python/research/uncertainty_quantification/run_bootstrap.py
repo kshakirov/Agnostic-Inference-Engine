@@ -1,5 +1,5 @@
-from  inference_core.bootstrap import get_metrics, bootstrap_naive
-from inference_core.nonparametric import calculate_empirically_cdf, calculate_plug_in_quantile, calculate_plug_in_conf_interval
+from  inference_core.uncertainty_quantification.bootstrap import get_metrics, bootstrap_naive
+from inference_core.estimation.nonparametric import calculate_empirically_cdf, calculate_plug_in_quantile, calculate_plug_in_conf_interval
 from pathlib import Path
 
 metrics = get_metrics("samples.dat")

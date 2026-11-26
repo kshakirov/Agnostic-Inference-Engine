@@ -1,4 +1,4 @@
-from inference_core.mle.generator import generate_normal_stream, mean_std
+from inference_core.estimation.mle.generator import generate_normal_stream, mean_std
 from math import sqrt
 import numpy as np
 
